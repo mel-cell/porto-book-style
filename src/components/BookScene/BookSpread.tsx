@@ -89,19 +89,13 @@ export default function BookSpread({ onClose }: BookSpreadProps) {
         {/* ════════════════ LEFT PAGE ════════════════ */}
         <div className={`${styles.page} ${styles.pageLeft}`}>
 
-          {/* Static left page content */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={leftIdx}
-              className={styles.fill}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isBackward ? 0 : 1 }}  // hide while backward-flipping
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              {get(leftIdx)}
-            </motion.div>
-          </AnimatePresence>
+          {/* Static left page content — NO FADE ANIMATION to prevent loop bug */}
+          <div
+            className={styles.fill}
+            style={{ opacity: isBackward ? 0 : 1 }} // Instant hide/show
+          >
+            {get(leftIdx)}
+          </div>
 
           {/* Under-layer for BACKWARD flip (shows previous left page beneath) */}
           {isBackward && (
@@ -115,25 +109,19 @@ export default function BookSpread({ onClose }: BookSpreadProps) {
             <div
               ref={flipCardRef}
               className={`${styles.flipCard} ${styles.flipCardLeft}`}
-              // transform is driven directly by JS, no CSS transition
             >
-              {/* Front face = current left page (what the user sees before flip) */}
               <div className={styles.flipFront}>
                 {get(leftIdx)}
                 <div className={styles.shadowFront} />
               </div>
-
-              {/* Back face = previous spread's RIGHT page */}
               <div className={styles.flipBack}>
                 {get(underBackwardRight)}
                 <div className={styles.shadowBack} />
               </div>
-
               <div className={styles.foldLine} />
             </div>
           )}
 
-          {/* Corner peek — left */}
           <div
             className={styles.cornerLeft}
             style={{ opacity: hoverEdge === "left" && showPrev ? 1 : 0 }}
@@ -146,19 +134,13 @@ export default function BookSpread({ onClose }: BookSpreadProps) {
         {/* ════════════════ RIGHT PAGE ════════════════ */}
         <div className={`${styles.page} ${styles.pageRight}`}>
 
-          {/* Static right page content */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={rightIdx}
-              className={styles.fill}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isForward ? 0 : 1 }}  // hide while forward-flipping
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              {get(rightIdx)}
-            </motion.div>
-          </AnimatePresence>
+          {/* Static right page content — NO FADE ANIMATION */}
+          <div
+            className={styles.fill}
+            style={{ opacity: isForward ? 0 : 1 }} // Instant hide/show
+          >
+            {get(rightIdx)}
+          </div>
 
           {/* Under-layer for FORWARD flip (shows next right page beneath) */}
           {isForward && (
