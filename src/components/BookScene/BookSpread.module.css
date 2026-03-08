@@ -3,45 +3,73 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
-/* Ambient glow behind the open book */
+/* Ambient glow behind book */
 .glow {
   position: absolute;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  width: 800px;
-  height: 400px;
-  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 60%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(108, 99, 255, 0.07) 0%, transparent 65%);
   filter: blur(60px);
   pointer-events: none;
   z-index: 0;
 }
 
-/* ── Spread (two pages side by side) ── */
-.spread {
-  display: flex;
+/* ── Book container ── */
+.book {
   position: relative;
+  display: flex;
   width: calc(var(--book-width) * 2);
   height: var(--book-height);
-  max-width: 95vw;
-  border-radius: 4px;
-  box-shadow: var(--shadow-book);
+  max-width: 92vw;
+  max-height: 88vh;
+  border-radius: 6px;
+  box-shadow:
+    0 70px 140px rgba(0, 0, 0, 0.9),
+    0 25px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
   cursor: grab;
-  overflow: hidden;
   touch-action: none;
   user-select: none;
   z-index: 1;
-  transform-style: preserve-3d;
 }
 
-.spread:active {
-  cursor: grabbing;
+.book:active { cursor: grabbing; }
+
+/* ── Individual page ── */
+.page {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-page);
+
+  /* 3D context for the flip card inside */
+  perspective: 1500px;
 }
 
-/* ── Spine (center fold line) ── */
+.pageLeft  { border-radius: 6px 0 0 6px; perspective-origin: 100% 50%; }
+.pageRight { border-radius: 0 6px 6px 0; perspective-origin:   0% 50%; }
+
+/* Full-fill helper */
+.fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Under-layer — sits at z:0, shows through when flip card is rotating */
+.underLayer {
+  z-index: 0;
+}
+
+/* ── Center spine ── */
 .spine {
   position: absolute;
   left: 50%;
@@ -49,67 +77,181 @@
   bottom: 0;
   width: 3px;
   translate: -50% 0;
-  background: linear-gradient(to bottom,
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.6) 50%,
-    rgba(0,0,0,0.4)
-  );
-  z-index: 15;
-  box-shadow: 1px 0 8px rgba(0,0,0,0.5), -1px 0 8px rgba(0,0,0,0.5);
+  z-index: 30;
   pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.6) 0%,
+    rgba(0,0,0,0.1) 50%,
+    rgba(0,0,0,0.6) 100%
+  );
+  box-shadow:
+    -4px 0 12px rgba(0,0,0,0.5),
+     4px 0 12px rgba(0,0,0,0.5);
 }
 
-/* ── Pages ── */
-.pageLeft,
-.pageRight {
-  flex: 1;
+/* ── FLIP CARD — shared base ── */
+.flipCard {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  z-index: 20;
+  /* NO transition — JS drives it frame-by-frame */
+  transition: none !important;
+}
+
+/*
+ * FORWARD flip: right page turns left over spine.
+ * Hinge = left edge (0%). rotateY goes 0 → -180°.
+ * transformOrigin set by JS based on drag startY.
+ */
+.flipCardRight {
+  transform-origin: 0% 80%; /* overridden by JS */
+}
+
+/*
+ * BACKWARD flip: left page turns right back to previous spread.
+ * Hinge = right edge (100%). rotateY goes 0 → +180°.
+ * transformOrigin set by JS based on drag startY.
+ */
+.flipCardLeft {
+  transform-origin: 100% 80%; /* overridden by JS */
+}
+
+/* ── Front face ── */
+.flipFront {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   overflow: hidden;
+  background: var(--bg-page);
+  z-index: 2;
 }
 
-.pageLeft {
-  border-radius: 4px 0 0 4px;
-  border-right: 1px solid rgba(0, 0, 0, 0.3);
+/*
+ * Back face.
+ * For FORWARD flip (flipCardRight): back starts at rotateY(180deg)
+ *   → becomes visible when card has rotated -180°
+ *   Content needs to be mirrored: scaleX(-1)
+ *
+ * For BACKWARD flip (flipCardLeft): back starts at rotateY(-180deg)
+ *   → becomes visible when card has rotated +180°
+ *   Content also mirrored: scaleX(-1)
+ */
+.flipBack {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  background: var(--bg-page);
+  z-index: 2;
 }
 
-.pageRight {
-  border-radius: 0 4px 4px 0;
+/* Forward flip back face */
+.flipCardRight .flipBack {
+  transform: rotateY(180deg) scaleX(-1);
+}
+
+/* Backward flip back face */
+.flipCardLeft .flipBack {
+  transform: rotateY(-180deg) scaleX(-1);
+}
+
+/* Shadow — darkens front face toward the fold */
+.shadowFront {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(
+    to left,
+    rgba(0,0,0,0.45) 0%,
+    rgba(0,0,0,0.08) 35%,
+    transparent 65%
+  );
+}
+
+.flipCardLeft .shadowFront {
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.45) 0%,
+    rgba(0,0,0,0.08) 35%,
+    transparent 65%
+  );
+}
+
+/* Shadow on back face near the fold */
+.shadowBack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.06) 35%,
+    transparent 65%
+  );
+}
+
+.flipCardLeft .shadowBack {
+  background: linear-gradient(
+    to left,
+    rgba(0,0,0,0.35) 0%,
+    rgba(0,0,0,0.06) 35%,
+    transparent 65%
+  );
+}
+
+/* Bright highlight at the fold (spine of turning page) */
+.foldLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(to right, rgba(255,255,255,0.18), transparent);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.flipCardLeft .foldLine {
+  left: auto;
+  right: 0;
+  background: linear-gradient(to left, rgba(255,255,255,0.18), transparent);
 }
 
 /* ── Corner peek indicators ── */
-.cornerPeekLeft {
+.cornerLeft {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
   pointer-events: none;
-  background: conic-gradient(
-    from 135deg,
-    rgba(108, 99, 255, 0.3) 0deg,
-    transparent 90deg
-  );
-  border-bottom-left-radius: 4px;
+  transition: opacity 0.22s ease;
+  background: radial-gradient(ellipse at bottom left, rgba(108,99,255,0.28) 0%, transparent 70%);
+  border-bottom-left-radius: 6px;
 }
 
-.cornerPeekRight {
+.cornerRight {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
   pointer-events: none;
-  background: conic-gradient(
-    from 315deg,
-    rgba(108, 99, 255, 0.3) 0deg,
-    transparent 90deg
-  );
-  border-bottom-right-radius: 4px;
-  box-shadow: -2px -2px 12px rgba(108, 99, 255, 0.15);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  background: radial-gradient(ellipse at bottom right, rgba(108,99,255,0.32) 0%, transparent 70%);
+  border-bottom-right-radius: 6px;
 }
 
-/* ── HUD (navigation hints) ── */
+/* ── HUD ── */
 .hud {
   display: flex;
   align-items: center;
@@ -117,29 +259,27 @@
   width: 100%;
   max-width: calc(var(--book-width) * 2);
   z-index: 1;
+  padding: 0 0.25rem;
 }
 
-.hudNav {
+.hint {
   font-size: 9px;
   font-family: 'JetBrains Mono', monospace;
   color: var(--text-muted);
-  letter-spacing: 0.1em;
-  min-width: 160px;
+  letter-spacing: 0.12em;
+  min-width: 80px;
+  opacity: 0.6;
 }
 
-.hudNav:last-child {
-  text-align: right;
-}
-
-.hudSpread {
+.counter {
   font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
   color: var(--text-secondary);
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.9rem;
   border-radius: 20px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
 }
 
 /* ── Close button ── */
@@ -147,22 +287,23 @@
   position: absolute;
   top: -2.5rem;
   right: 0;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255,255,255,0.03);
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
   z-index: 20;
 }
 
 .closeBtn:hover {
-  border-color: var(--border-glow);
+  border-color: var(--accent);
   color: var(--text-primary);
+  background: rgba(108,99,255,0.08);
 }

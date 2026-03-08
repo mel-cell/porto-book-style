@@ -2,159 +2,224 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageFlip } from "@/hooks/usePageFlip";
-import PageFlipOverlay from "./PageFlipOverlay";
 import styles from "./BookSpread.module.css";
 
-interface SpreadContent {
-  left: React.ReactNode;
-  right: React.ReactNode;
-}
+// ─── Page Registry ───────────────────────────────────────────────────────────
+// To add a page: import it and add to PAGE_COMPONENTS.
+// Index 0  → Inside Cover (always left when book first opens)
+// Index 1  → First right page (first spread)
+// Index 2  → Second left page (after first flip)
+// Index 3  → Second right page
+// ... and so on. Always pairs.
+import Page1InsideCover from "@/components/pages/Page1InsideCover";
+import Page2Intro       from "@/components/pages/Page2Intro";
+import Page3Skills      from "@/components/pages/Page3Skills";
+import Page4Projects    from "@/components/pages/Page4Projects";
+import Page5Contact     from "@/components/pages/Page5Contact";
+
+const PAGES = [
+  <Page1InsideCover key="p1" />,
+  <Page2Intro       key="p2" />,
+  <Page3Skills      key="p3" />,
+  <Page4Projects    key="p4" />,
+  <Page5Contact     key="p5" />,
+];
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface BookSpreadProps {
-  spreads: SpreadContent[];
-  currentSpread: number;
-  onNext: () => void;
-  onPrev: () => void;
-  canGoNext: boolean;
-  canGoPrev: boolean;
   onClose: () => void;
 }
 
-export default function BookSpread({
-  spreads,
-  currentSpread,
-  onNext,
-  onPrev,
-  canGoNext,
-  canGoPrev,
-  onClose,
-}: BookSpreadProps) {
+export default function BookSpread({ onClose }: BookSpreadProps) {
   const {
+    currentPage,   // index of the RIGHT page (starts at 1)
+    canGoNext,
+    canGoPrev,
+    spreadRef,
+    flipCardRef,
     flipState,
-    pageRef,
+    isFlipping,
     onPointerDown,
     onPointerMove,
     onPointerUp,
-    cornerPeekSide,
     onMouseMove,
     onMouseLeave,
-  } = usePageFlip({
-    onFlipNext: onNext,
-    onFlipPrev: onPrev,
-    canGoNext,
-    canGoPrev,
-  });
+    hoverEdge,
+  } = usePageFlip(PAGES.length);
 
-  const current = spreads[currentSpread];
-  const next = spreads[currentSpread + 1];
-  const prev = spreads[currentSpread - 1];
+  // ── Page indices ──────────────────────────────────────────────────────────
+  const rightIdx = currentPage;
+  const leftIdx  = currentPage - 1;
+
+  // After a FORWARD flip: right page turns → new left = currentPage+1, new right = currentPage+2
+  // After a BACKWARD flip: left turns back → new left = currentPage-3, new right = currentPage-2
+  // The UNDER layer shows what will be visible after the flip completes
+  const underForwardRight = rightIdx + 2;  // new right after forward
+  const underForwardLeft  = rightIdx + 1;  // new left after forward (currently flipping page's back)
+  const underBackwardLeft = leftIdx - 2;   // new left after backward
+  const underBackwardRight = leftIdx - 1;  // new right after backward
+
+  const get = (i: number) => (i >= 0 && i < PAGES.length ? PAGES[i] : null);
+
+  // ── Spread counter ────────────────────────────────────────────────────────
+  const spreadNum    = Math.ceil(currentPage / 2);
+  const totalSpreads = Math.ceil((PAGES.length - 1) / 2);
+  const showPrev     = canGoPrev;
+  const showNext     = canGoNext;
+
+  // ── Flip direction helpers ────────────────────────────────────────────────
+  const isForward  = flipState?.direction === "forward";
+  const isBackward = flipState?.direction === "backward";
 
   return (
-    <motion.div
-      className={styles.wrapper}
-      initial={{ opacity: 0, scale: 0.95, rotateX: 5 }}
-      animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
-      style={{ perspective: "var(--perspective)" }}
-    >
-      {/* Spine divider (center of book) */}
-      <div className={styles.spine} />
-
-      {/* Ambient glow */}
+    <div className={styles.wrapper}>
       <div className={styles.glow} />
 
-      {/* Main spread container */}
+      {/* ── Book block ── */}
       <div
-        ref={pageRef}
-        className={styles.spread}
+        ref={spreadRef}
+        className={styles.book}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
       >
-        {/* LEFT PAGE */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`left-${currentSpread}`}
-            className={styles.pageLeft}
-            initial={{ opacity: 0.6 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0.6 }}
-            transition={{ duration: 0.3 }}
-          >
-            {current?.left}
 
-            {/* Corner peek indicator — left */}
-            {canGoPrev && (
-              <motion.div
-                className={styles.cornerPeekLeft}
-                animate={{ opacity: cornerPeekSide === "left" ? 1 : 0, x: cornerPeekSide === "left" ? 0 : -5 }}
-                transition={{ duration: 0.2 }}
-              />
-            )}
-          </motion.div>
-        </AnimatePresence>
+        {/* ════════════════ LEFT PAGE ════════════════ */}
+        <div className={`${styles.page} ${styles.pageLeft}`}>
 
-        {/* RIGHT PAGE */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`right-${currentSpread}`}
-            className={styles.pageRight}
-            initial={{ opacity: 0.6 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0.6 }}
-            transition={{ duration: 0.3 }}
-          >
-            {current?.right}
+          {/* Static left page content */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={leftIdx}
+              className={styles.fill}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isBackward ? 0 : 1 }}  // hide while backward-flipping
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              {get(leftIdx)}
+            </motion.div>
+          </AnimatePresence>
 
-            {/* Corner peek indicator — right (bottom corner lifting) */}
-            {canGoNext && (
-              <motion.div
-                className={styles.cornerPeekRight}
-                animate={{
-                  opacity: cornerPeekSide === "right" ? 1 : 0,
-                  y: cornerPeekSide === "right" ? -4 : 0,
-                }}
-                transition={{ duration: 0.2 }}
-              />
-            )}
-          </motion.div>
-        </AnimatePresence>
+          {/* Under-layer for BACKWARD flip (shows previous left page beneath) */}
+          {isBackward && (
+            <div className={`${styles.fill} ${styles.underLayer}`}>
+              {get(underBackwardLeft)}
+            </div>
+          )}
 
-        {/* Flip overlay (corner peel + 3D flip) */}
-        <PageFlipOverlay
-          flipState={flipState}
-          backContent={
-            flipState.direction === "right" ? next?.left : prev?.right
-          }
-        />
+          {/* BACKWARD flip card — flips from left page to the right */}
+          {isBackward && (
+            <div
+              ref={flipCardRef}
+              className={`${styles.flipCard} ${styles.flipCardLeft}`}
+              // transform is driven directly by JS, no CSS transition
+            >
+              {/* Front face = current left page (what the user sees before flip) */}
+              <div className={styles.flipFront}>
+                {get(leftIdx)}
+                <div className={styles.shadowFront} />
+              </div>
+
+              {/* Back face = previous spread's RIGHT page */}
+              <div className={styles.flipBack}>
+                {get(underBackwardRight)}
+                <div className={styles.shadowBack} />
+              </div>
+
+              <div className={styles.foldLine} />
+            </div>
+          )}
+
+          {/* Corner peek — left */}
+          <div
+            className={styles.cornerLeft}
+            style={{ opacity: hoverEdge === "left" && showPrev ? 1 : 0 }}
+          />
+        </div>
+
+        {/* ════════════════ SPINE ════════════════ */}
+        <div className={styles.spine} />
+
+        {/* ════════════════ RIGHT PAGE ════════════════ */}
+        <div className={`${styles.page} ${styles.pageRight}`}>
+
+          {/* Static right page content */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={rightIdx}
+              className={styles.fill}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isForward ? 0 : 1 }}  // hide while forward-flipping
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              {get(rightIdx)}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Under-layer for FORWARD flip (shows next right page beneath) */}
+          {isForward && (
+            <div className={`${styles.fill} ${styles.underLayer}`}>
+              {get(underForwardRight)}
+            </div>
+          )}
+
+          {/* FORWARD flip card — flips from right page over spine to the left */}
+          {isForward && (
+            <div
+              ref={flipCardRef}
+              className={`${styles.flipCard} ${styles.flipCardRight}`}
+              // transform is driven directly by JS, no CSS transition
+            >
+              {/* Front face = current right page */}
+              <div className={styles.flipFront}>
+                {get(rightIdx)}
+                <div className={styles.shadowFront} />
+              </div>
+
+              {/* Back face = next spread's left page */}
+              <div className={styles.flipBack}>
+                {get(underForwardLeft)}
+                <div className={styles.shadowBack} />
+              </div>
+
+              <div className={styles.foldLine} />
+            </div>
+          )}
+
+          {/* Corner peek — right */}
+          <div
+            className={styles.cornerRight}
+            style={{
+              opacity: hoverEdge === "right" && showNext ? 1 : 0,
+              transform: hoverEdge === "right" && showNext ? "translateY(-5px)" : "translateY(0)",
+            }}
+          />
+        </div>
       </div>
 
-      {/* Bottom HUD */}
+      {/* ─── HUD ─── */}
       <div className={styles.hud}>
-        <span className={styles.hudNav}>
-          {canGoPrev ? "← swipe right to go back" : ""}
-        </span>
-        <span className={styles.hudSpread}>
-          {currentSpread + 1} / {spreads.length}
-        </span>
-        <span className={styles.hudNav}>
-          {canGoNext ? "swipe left for more →" : ""}
+        <span className={styles.hint}>{showPrev ? "← drag" : ""}</span>
+        <span className={styles.counter}>{spreadNum} / {totalSpreads}</span>
+        <span className={styles.hint} style={{ textAlign: "right" }}>
+          {showNext ? "drag →" : ""}
         </span>
       </div>
 
-      {/* Close button */}
+      {/* Close */}
       <motion.button
         className={styles.closeBtn}
         onClick={onClose}
         whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: 0.93 }}
         title="Close book"
       >
-        <span>✕</span>
+        ✕
       </motion.button>
-    </motion.div>
+    </div>
   );
 }
