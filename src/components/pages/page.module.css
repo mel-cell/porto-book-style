@@ -1,5 +1,4 @@
-/* Shared styles for all book pages */
-/* Each page fills its container completely */
+/* Shared page styles — light paper aesthetic */
 
 .page {
   width: 100%;
@@ -9,74 +8,76 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* Subtle vignette toward edges */
+  color: var(--text-primary);
 }
 
-/* ── Page number (top corner) ── */
+/* ── Page number ── */
 .pageNumber {
   position: absolute;
-  top: 1.25rem;
-  right: 1.5rem;
+  top: 1.5rem;
+  right: 1.75rem;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 8px;
   letter-spacing: 0.25em;
   color: var(--text-muted);
-  opacity: 0.6;
+  opacity: 0.5;
   user-select: none;
 }
 
-/* Even pages (left side) — page number on left */
+/* Odd pages (left side) get number on the left */
 [data-page="1"] .pageNumber,
 [data-page="3"] .pageNumber,
 [data-page="5"] .pageNumber {
   right: auto;
-  left: 1.5rem;
+  left: 1.75rem;
 }
 
-/* ── Simple placeholder layout ── */
+/* ── Simple centered placeholder layout ── */
 .placeholder {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 2rem;
+  gap: 0.6rem;
+  padding: 2.5rem;
 }
 
 .label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(10px, 2vw, 13px);
-  letter-spacing: 0.3em;
+  font-size: clamp(9px, 2vw, 12px);
+  letter-spacing: 0.35em;
   color: var(--text-muted);
   text-transform: uppercase;
+  font-weight: 500;
 }
 
 .sublabel {
   font-family: 'Inter', sans-serif;
   font-size: clamp(8px, 1.5vw, 11px);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   color: var(--text-muted);
-  opacity: 0.5;
-  text-transform: uppercase;
+  opacity: 0.6;
 }
 
-/* ── Page fold shadow (right edge of left pages, left edge of right pages) ── */
-.page::after {
+/* ── Subtle fold shadow at spine edge ── */
+.page::before {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 30px;
-  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.08));
+  width: 24px;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.04));
   pointer-events: none;
+  z-index: 1;
 }
 
-[data-page="1"]::after,
-[data-page="3"]::after,
-[data-page="5"]::after {
+/* Left pages — shadow on left side (toward spine) */
+[data-page="1"]::before,
+[data-page="3"]::before,
+[data-page="5"]::before {
   right: auto;
   left: 0;
-  background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.08));
+  background: linear-gradient(to left, transparent, rgba(0,0,0,0.04));
 }

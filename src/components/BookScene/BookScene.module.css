@@ -7,12 +7,14 @@
   overflow: hidden;
 }
 
+/* Clean paper background — subtle warm-to-light radial */
 .bg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 800px 600px at 50% 40%, rgba(108, 99, 255, 0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 600px 400px at 20% 80%, rgba(0, 212, 170, 0.03) 0%, transparent 70%),
-    var(--bg);
+  background: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    #f8f6f2 0%,
+    #ece9e2 100%
+  );
   pointer-events: none;
 }
