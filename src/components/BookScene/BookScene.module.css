@@ -1,0 +1,18 @@
+.scene {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 800px 600px at 50% 40%, rgba(108, 99, 255, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 20% 80%, rgba(0, 212, 170, 0.03) 0%, transparent 70%),
+    var(--bg);
+  pointer-events: none;
+}

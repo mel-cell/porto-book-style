@@ -1,0 +1,168 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Ambient glow behind the open book */
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 60%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Spread (two pages side by side) ── */
+.spread {
+  display: flex;
+  position: relative;
+  width: calc(var(--book-width) * 2);
+  height: var(--book-height);
+  max-width: 95vw;
+  border-radius: 4px;
+  box-shadow: var(--shadow-book);
+  cursor: grab;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  z-index: 1;
+  transform-style: preserve-3d;
+}
+
+.spread:active {
+  cursor: grabbing;
+}
+
+/* ── Spine (center fold line) ── */
+.spine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  translate: -50% 0;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.4),
+    rgba(0,0,0,0.6) 50%,
+    rgba(0,0,0,0.4)
+  );
+  z-index: 15;
+  box-shadow: 1px 0 8px rgba(0,0,0,0.5), -1px 0 8px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+/* ── Pages ── */
+.pageLeft,
+.pageRight {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.pageLeft {
+  border-radius: 4px 0 0 4px;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.pageRight {
+  border-radius: 0 4px 4px 0;
+}
+
+/* ── Corner peek indicators ── */
+.cornerPeekLeft {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  background: conic-gradient(
+    from 135deg,
+    rgba(108, 99, 255, 0.3) 0deg,
+    transparent 90deg
+  );
+  border-bottom-left-radius: 4px;
+}
+
+.cornerPeekRight {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  background: conic-gradient(
+    from 315deg,
+    rgba(108, 99, 255, 0.3) 0deg,
+    transparent 90deg
+  );
+  border-bottom-right-radius: 4px;
+  box-shadow: -2px -2px 12px rgba(108, 99, 255, 0.15);
+}
+
+/* ── HUD (navigation hints) ── */
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: calc(var(--book-width) * 2);
+  z-index: 1;
+}
+
+.hudNav {
+  font-size: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  min-width: 160px;
+}
+
+.hudNav:last-child {
+  text-align: right;
+}
+
+.hudSpread {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  letter-spacing: 0.1em;
+}
+
+/* ── Close button ── */
+.closeBtn {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+  z-index: 20;
+}
+
+.closeBtn:hover {
+  border-color: var(--border-glow);
+  color: var(--text-primary);
+}

@@ -1,0 +1,261 @@
+.scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  user-select: none;
+}
+
+/* ── Ambient glow ── */
+.ambientGlow {
+  position: absolute;
+  width: 300px;
+  height: 120px;
+  bottom: -30px;
+  left: 50%;
+  translate: -50% 0;
+  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Float + tilt wrappers ── */
+.floatWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.tiltWrapper {
+  cursor: pointer;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* ── Book 3D structure ── */
+.book {
+  display: flex;
+  position: relative;
+  transform-style: preserve-3d;
+  width: var(--book-width);
+  height: var(--book-height);
+  filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.7));
+}
+
+/* ── Spine ── */
+.spine {
+  position: absolute;
+  left: -28px;
+  top: 0;
+  width: 28px;
+  height: 100%;
+  background: linear-gradient(to right, #0c0c16, #1a1a28);
+  border-radius: 2px 0 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(-90deg) translateX(-14px);
+  transform-origin: right center;
+  transform-style: preserve-3d;
+  border-right: 1px solid var(--border);
+}
+
+.spineText {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Cover face ── */
+.cover {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #14141f 0%, #0f0f1a 40%, #111120 100%);
+  border-radius: 0 6px 6px 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Shine overlay */
+.shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: background 0.1s ease;
+}
+
+/* ── Cover Content ── */
+.coverContent {
+  position: relative;
+  z-index: 5;
+  padding: 2.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.coverTag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
+  50% { opacity: 0.6; box-shadow: 0 0 16px var(--accent); }
+}
+
+.coverTitle {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.coverName {
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+}
+
+.coverSub {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.coverDivider {
+  margin: 1.5rem 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--accent), transparent);
+  width: 60%;
+}
+
+.coverCta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+  padding-bottom: 0.5rem;
+}
+
+.ctaArrow {
+  display: inline-block;
+  color: var(--accent);
+}
+
+/* Corner decorations */
+.cornerTL,
+.cornerBR {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+}
+
+.cornerTL {
+  top: 1.5rem;
+  right: 1.5rem;
+  border-top: 1px solid var(--border-glow);
+  border-right: 1px solid var(--border-glow);
+}
+
+.cornerBR {
+  bottom: 1.5rem;
+  left: 1.5rem;
+  border-bottom: 1px solid var(--border-glow);
+  border-left: 1px solid var(--border-glow);
+}
+
+/* Subtle grid lines */
+.gridLines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(108, 99, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 99, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* ── Page edges (right side) ── */
+.pageEdges {
+  position: absolute;
+  right: -6px;
+  top: 2px;
+  bottom: 2px;
+  width: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.pageEdge {
+  flex: 1;
+  background: linear-gradient(to right, #1e1e2e, #252535);
+  border-right: 1px solid rgba(255,255,255,0.04);
+}
+
+.pageEdge:nth-child(even) {
+  background: linear-gradient(to right, #1a1a28, #1e1e30);
+}
+
+/* ── Shadow below book ── */
+.bookShadow {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  translate: -50% 0;
+  width: 80%;
+  height: 24px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* ── Hint text ── */
+.hint {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-align: center;
+  animation: fadeFloat 2s ease-in-out infinite;
+}
+
+@keyframes fadeFloat {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 0.9; transform: translateY(-3px); }
+}
