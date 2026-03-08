@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import BookCover from "./BookCover";
 import BookSpread from "./BookSpread";
+import PenIllustration from "./PenIllustration";
 import styles from "./BookScene.module.css";
 
 type AppState = "cover" | "opening" | "open" | "closing";
@@ -30,6 +31,31 @@ export default function BookScene({ isBlurred = false }: BookSceneProps) {
     <div className={styles.scene}>
       {/* Background remains sharp at all times */}
       <div className={styles.bg} />
+
+      {/* Floating Pen Illustration on the left (Hides on Mobile via CSS) */}
+      <motion.div
+        className={styles.pen}
+        initial={{ opacity: 0, x: "calc(var(--book-width) * -0.5 - 15vw)", y: "-50%", rotate: -60 }}
+        animate={{ 
+          opacity: 1, 
+          x: (appState === "cover" || appState === "closing") 
+                ? "calc(var(--book-width) * -0.5 - 6vw)"  // Dekat dengan buku yang tertutup
+                : "calc(var(--book-width) * -1 - 8vw)",   // Menjauh / geser ke samping saat buku dibuka
+          y: "-50%", 
+          marginTop: ["0px", "-20px", "0px"], // Efek mengambang (floating loop)
+          rotate: (appState === "cover" || appState === "closing") ? -15 : -22, 
+          filter: isBlurred ? "blur(32px)" : "blur(0px)" 
+        }}
+        transition={{ 
+          opacity: { duration: 1 },
+          filter: { duration: 1.2 },
+          rotate: { duration: 1, ease: "easeInOut" },
+          x: { duration: 1, ease: "easeInOut" },
+          marginTop: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+        }}
+      >
+        <PenIllustration style={{ height: "100%", width: "auto" }} />
+      </motion.div>
 
       <AnimatePresence mode="wait">
         {(appState === "cover" || appState === "closing") && (
