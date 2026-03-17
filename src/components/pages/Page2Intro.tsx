@@ -42,16 +42,16 @@ export default function Page2Intro() {
           </p>
         </div>
 
-        {/* GitHub Sticker Link */}
+        {/* GitHub Sticker Link - Static with slight rotation */}
         <motion.a 
           href="https://github.com/melvin-cell" 
           target="_blank" 
           rel="noopener noreferrer"
           className={novelStyles.githubSticker}
-          whileHover={{ y: -5 }}
-          whileTap={{ scale: 0.9 }}
+          whileHover={{ y: -5, rotate: 12, scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          animate={{ opacity: 1, scale: 1, rotate: 8 }} // Rotasi dikit biar makin estetik
           transition={{ delay: 1.8, type: "spring", stiffness: 200 }}
         >
           <svg viewBox="0 0 24 24" fill="currentColor">
