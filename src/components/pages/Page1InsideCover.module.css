@@ -128,12 +128,12 @@
 .docHeaderTop {
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-family: var(--font-serif);
+  font-size: 0.65rem;
   color: var(--text-secondary);
   text-transform: uppercase;
   margin-bottom: 2rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   opacity: 0.8;
 }
 
