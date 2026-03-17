@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Caveat, Playfair_Display, Lora } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,6 +13,37 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
+});
+
+const caveat = Caveat({
+  variable: "--font-handwrite",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const lora = Lora({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const dryBrush = localFont({
+  src: [
+    {
+      path: "../../public/fonts/DryBrush.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-brush",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +64,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${jetbrainsMono.variable} ${caveat.variable} ${playfairDisplay.variable} ${lora.variable} ${dryBrush.variable}`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
