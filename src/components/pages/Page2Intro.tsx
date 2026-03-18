@@ -18,7 +18,7 @@ const containerVariants = {
 };
 
 const itemVariants: any = {
-  hidden: { opacity: 0, y: -5 },
+  hidden: { opacity: 0, y: -7 },
   visible: { 
     opacity: 1, 
     y: 0, 
@@ -98,9 +98,9 @@ export default function Page2Intro() {
               className={coverStyles.bgCard}
               initial={false}              
               animate={{ 
-                x: isCardOut ? -130 : -50,
-                y: isCardOut ? 50 : 30,
-                rotate: isCardOut ? 6 : -20 
+                x: isCardOut ? -50 : -130 ,
+                y: isCardOut ? 30 : 55,
+                rotate: isCardOut ? -20 : 6 
               }}
               transition={{ type: "spring", stiffness: 100, damping: 20 }}
               onClick={(e) => {
@@ -137,9 +137,9 @@ export default function Page2Intro() {
             
             <motion.span 
               className={coverStyles.titleHint}
-              animate={{ opacity: isFlipped ? 0 : 1 }}
             >
-              click this card
+              im so tired.. <br />
+              do you?
             </motion.span>
           </motion.div>
         </div>

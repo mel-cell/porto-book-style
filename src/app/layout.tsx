@@ -46,6 +46,42 @@ const dryBrush = localFont({
   display: "swap",
 });
 
+const zeyada = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Zeyada.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-zeyada",
+  display: "swap",
+});
+
+const roughDraft = localFont({
+  src: [
+    {
+      path: "../../public/fonts/RoughDraft.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-rough",
+  display: "swap",
+});
+
+const scrawl = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Scrawl.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-scrawl",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Melvin — Web Dev & DevOps",
   description:
@@ -65,7 +101,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${caveat.variable} ${playfairDisplay.variable} ${lora.variable} ${dryBrush.variable}`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${caveat.variable} ${playfairDisplay.variable} ${lora.variable} ${dryBrush.variable} ${zeyada.variable} ${roughDraft.variable} ${scrawl.variable}`}
         suppressHydrationWarning
       >
         {children}
