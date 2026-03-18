@@ -1,6 +1,32 @@
-/* Page 1 was emptied of its content. 
-   Styles for the moved content are now in Page2Intro.module.css */
+.pageBlack {
+  background-color: #0d0d0d !important; /* Rich deep black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
 
-.pageNumber {
-  background-color: black;
+.contentCenter {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageContainer {
+  position: relative;
+  width: 80%;
+  height: 80%;
+}
+
+.invertImage {
+  object-fit: contain;
+  filter: invert(1) contrast(1.2) brightness(1.2); /* Black ink -> White ink */
+  mix-blend-mode: lighten; /* Ensure pure whites blend with black bg */
+}
+
+.pageNumberWhite {
+  color: rgba(255, 255, 255, 0.4) !important;
 }
