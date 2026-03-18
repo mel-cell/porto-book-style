@@ -30,8 +30,6 @@ export default function IntroGimmick({ isFading, onStartFade, onComplete }: Intr
       transition={{ duration: 1, ease: "easeInOut" }}
       style={{ pointerEvents: isFading ? "none" : "auto" }}
     >
-      {/* Blurred background over everything */}
-      <div className={styles.blurLayer} />
 
       {/* Foreground Warning Box */}
       <div className={styles.overlay}>

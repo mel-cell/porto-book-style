@@ -10,11 +10,8 @@ import styles from "./BookScene.module.css";
 
 type AppState = "cover" | "opening" | "open" | "closing";
 
-interface BookSceneProps {
-  isBlurred?: boolean;
-}
 
-export default function BookScene({ isBlurred = false }: BookSceneProps) {
+export default function BookScene() {
   const [appState, setAppState] = useState<AppState>("cover");
 
   const handleOpen = () => {
@@ -42,13 +39,11 @@ export default function BookScene({ isBlurred = false }: BookSceneProps) {
                 ? "calc(var(--book-width) * -0.5 - 6vw)"  // Dekat dengan buku yang tertutup
                 : "calc(var(--book-width) * -1 - 8vw)",   // Menjauh / geser ke samping saat buku dibuka
           y: "-50%", 
-          marginTop: ["0px", "-20px", "0px"], // Efek mengambang (floating loop)
+          marginTop: ["0px", "-20px", "0px"],
           rotate: (appState === "cover" || appState === "closing") ? -15 : -22, 
-          filter: isBlurred ? "blur(32px)" : "blur(0px)" 
         }}
         transition={{ 
           opacity: { duration: 1 },
-          filter: { duration: 1.2 },
           rotate: { duration: 1, ease: "easeInOut" },
           x: { duration: 1, ease: "easeInOut" },
           marginTop: { duration: 6, repeat: Infinity, ease: "easeInOut" }
@@ -61,19 +56,17 @@ export default function BookScene({ isBlurred = false }: BookSceneProps) {
         {(appState === "cover" || appState === "closing") && (
           <motion.div
             key="cover"
-            initial={{ opacity: 0, y: 40, scale: 0.95, filter: "blur(32px)" }}
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ 
               opacity: 1, 
               y: 0, 
               scale: 1, 
-              filter: isBlurred ? "blur(32px)" : "blur(0px)" 
             }}
             exit={{
               opacity: 0,
               scale: 0.88,
               rotateY: -12,
               x: -40,
-              filter: "blur(0px)",
               transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1] },
             }}
             transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
@@ -86,17 +79,15 @@ export default function BookScene({ isBlurred = false }: BookSceneProps) {
         {(appState === "open" || appState === "opening") && (
           <motion.div
             key="spread"
-            initial={{ opacity: 0, scale: 0.88, rotateX: 8, filter: "blur(32px)" }}
+            initial={{ opacity: 0, scale: 0.88, rotateX: 8 }}
             animate={{ 
               opacity: 1, 
               scale: 1, 
               rotateX: 0,
-              filter: isBlurred ? "blur(32px)" : "blur(0px)"
             }}
             exit={{ 
               opacity: 0, 
               scale: 0.9, 
-              filter: "blur(0px)",
               transition: { duration: 0.4 } 
             }}
             transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
