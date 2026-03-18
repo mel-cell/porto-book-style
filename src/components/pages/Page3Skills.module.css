@@ -1,121 +1,102 @@
+/* ─────────────────────────────────────────
+   Page 3 – Introduction  (novel + chaos)
+───────────────────────────────────────── */
+
 .pageContainer {
-  padding: 3.5rem 2.8rem;
+  position: relative;
+  padding: 2.8rem 2.4rem 2rem;
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background-color: var(--bg-page);
   color: var(--text-primary);
 }
 
-.chapterTitle {
-  font-family: var(--font-serif);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.4em;
-  color: var(--text-muted);
-  margin-bottom: 2rem;
-  text-align: center;
-  font-weight: 500;
-}
-
-.introMeta {
+/* ── TOP META ── */
+.topMeta {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 2rem;
   font-family: var(--font-serif);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
+  opacity: 0.8;
+  letter-spacing: 0.15em;
+}
+
+.topNumberSmall,
+.topRomanSmall {
+  letter-spacing: 0.3em;
+}
+
+.monthLabel {
   text-transform: uppercase;
-  margin-bottom: 3.5rem;
-  letter-spacing: 0.1em;
-  opacity: 0.7;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  padding-bottom: 0.5rem;
+  letter-spacing: 0.35em;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  font-size: 0.65rem;
 }
 
-.novelBody {
-  font-family: var(--font-body); /* Lora */
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  text-align: justify;
-}
-
-/* Drop Cap style for the first letter */
-.novelBody p:first-of-type::first-letter {
-  float: left;
-  font-family: var(--font-serif);
-  font-size: 4.2rem;
-  line-height: 0.8;
-  padding-top: 4px;
-  padding-right: 8px;
-  padding-left: 3px;
-  color: var(--text-primary);
-}
-
-.novelBody p {
-  margin-bottom: 1.5rem;
-  text-indent: 0;
-}
-
-/* Subsequent paragraphs usually have indents in classic novels */
-.novelBody p + p {
-  text-indent: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.divider {
-  margin: 3rem auto;
-  width: 40px;
-  height: 1px;
-  background-color: var(--border-strong);
+/* ── MAIN GRID ── */
+.columnsGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.5rem;
+  flex: 1;
+  min-height: 0;
   position: relative;
 }
 
-.divider::after {
-  content: "•";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--bg-page);
-  padding: 0 10px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-
-/* ── GITHUB STICKER ── */
-.githubSticker {
-  position: absolute;
-  bottom: 2.5rem;
-  right: 2.5rem;
-  width: 70px;
-  height: 70px;
-  background: white;
-  border-radius: 50%;
-  padding: 12px;
+/* ── LEFT COLUMN – formal prose ── */
+.leftColumn {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 
-    0 4px 10px rgba(0,0,0,0.1),
-    0 0 0 2px white,
-    0 0 0 3px rgba(0,0,0,0.05);
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  flex-direction: column;
 }
 
-.githubSticker:hover {
-  transform: scale(1.1) rotate(15deg);
-  box-shadow: 
-    0 10px 20px rgba(0,0,0,0.15),
-    0 0 0 2px white,
-    0 0 0 4px rgba(0,0,0,0.08);
+.novelBody {
+  font-family: var(--font-body);
+  font-size: 0.90rem; /* Ukuran lebih besar agar terbaca */
+  line-height: 1.3;
+  color: var(--text-secondary);
+  text-align: justify;
+  letter-spacing: 0.01em;
 }
 
-.githubSticker svg {
-  width: 100%;
-  height: 100%;
-  color: #1a1a1a;
+.novelBody p {
+  margin-bottom: 1.2rem;
 }
+
+.novelBody p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 3.2rem; /* Diperkecil dari 3.8rem agar lebih proporsional */
+  line-height: 0.85;
+  padding-top: 6px;
+  padding-right: 8px;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* ── RIGHT COLUMN – IMAGE ── */
+.rightColumn {
+  position: relative;
+  overflow: visible; /* allow blend to show outside clip */
+  background: transparent;
+}
+
+.abstractImage {
+  object-fit: contain;
+  object-position: top center;
+  mix-blend-mode: multiply;   /* white → transparent, ink stays */
+  filter: grayscale(100%) contrast(1.1) brightness(1.05);
+  opacity: 0.9;
+  margin-top: -10%;
+}
+
+/* Font helpers */
+.fontZeyada { font-family: var(--font-zeyada); }
+.fontRough  { font-family: var(--font-rough);  }
+.fontScrawl { font-family: var(--font-scrawl); }

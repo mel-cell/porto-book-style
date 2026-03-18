@@ -2,27 +2,26 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import styles from "./page.module.css";
 import coverStyles from "./Page2Intro.module.css";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
       delayChildren: 0.5,
-      staggerChildren: 0.3,
+      staggerChildren: 0.15, // Let's keep a small stagger for page 2 as requested before
     },
   },
 };
 
-const itemVariants: any = {
-  hidden: { opacity: 0, y: -7 },
+const itemVariants: Variants = {
+  hidden: { opacity: 0 },
   visible: { 
     opacity: 1, 
-    y: 0, 
-    transition: { type: "spring", stiffness: 100, damping: 12 } 
+    transition: { duration: 0.6, ease: "linear" } 
   },
 };
 

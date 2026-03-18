@@ -1,2 +1,6 @@
 /* Page 1 was emptied of its content. 
    Styles for the moved content are now in Page2Intro.module.css */
+
+.pageNumber {
+  background-color: black;
+}
