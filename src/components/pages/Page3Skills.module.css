@@ -94,6 +94,7 @@
   filter: grayscale(100%) contrast(1.1) brightness(1.05);
   opacity: 0.9;
   margin-top: -10%;
+  margin-left: -6.5%;
 }
 
 /* Font helpers */
