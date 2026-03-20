@@ -1,0 +1,71 @@
+.pageContainer {
+  padding: 4rem 2.8rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-serif);
+  /* margin-top: -25%; */
+}
+
+.contentsTitle {
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 0.45em;
+  margin-bottom: 3rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.tocItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem; 
+  font-size: 0.72rem;
+  color: var(--text-primary);
+}
+
+/* Indentation Arc — Satu lengkungan besar unik */
+.ind0 { padding-left: 0; }
+.ind1 { padding-left: 0.9rem; }
+.ind2 { padding-left: 1.8rem; }
+.ind3 { padding-left: 2.7rem; }
+.ind4 { padding-left: 3.5rem; }
+.ind5 { padding-left: 4.2rem; }
+.ind6 { padding-left: 4.8rem; }
+.ind7 { padding-left: 5.3rem; }
+.ind8 { padding-left: 5.7rem; }
+.ind9 { padding-left: 6.0rem; }
+.ind10 { padding-left: 6.2rem; } /* Puncak lengkungan */
+.ind11 { padding-left: 6.0rem; }
+.ind12 { padding-left: 5.5rem; }
+.ind13 { padding-left: 4.5rem; }
+.ind14 { padding-left: 3.0rem; }
+.ind15 { padding: 1.5rem; }
+
+.label {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+  margin: 0 0.4rem;
+  height: 1px;
+}
+
+.value {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.keychainLeft {
+  position: absolute;
+  top: 220px;
+  left: 15px;
+  z-index: 999;
+}

@@ -1,0 +1,87 @@
+.marginaliaLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+  font-family: var(--font-handwrite);
+  color: #3e2723;
+  opacity: 0.75;
+}
+
+/* Handwritten generic style */
+.scribble {
+  position: absolute;
+  font-size: 0.85rem;
+  line-height: 1.1;
+  transform: rotate(-2deg);
+  white-space: nowrap;
+}
+
+.scrawlFont {
+  font-family: var(--font-scrawl);
+  font-size: 1rem;
+}
+
+.roughFont {
+  font-family: var(--font-rough);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* Specific marginalia items */
+.note1 {
+  top: 15%;
+  left: 5%;
+  transform: rotate(-10deg);
+}
+
+.note2 {
+  top: 40%;
+  left: 8%;
+  transform: rotate(5deg);
+}
+
+.note3 {
+  top: 48%; /* Moved to middle */
+  left: 6%;
+  transform: rotate(-2deg);
+}
+
+/* Technical Sketch */
+.sketch {
+  position: absolute;
+  top: 40%; /* Moved to middle left */
+  left: 30px;
+  width: 140px;
+  height: 100px;
+  opacity: 0.6;
+}
+
+/* Ink splat */
+.splat {
+  position: absolute;
+  top: 25%;
+  right: 5%;
+  width: 30px;
+  height: 30px;
+  opacity: 0.2;
+}
+
+/* Archive Stamp */
+.stamp {
+  position: absolute;
+  top: 2.5rem;
+  left: 2rem;
+  border: 1.5px solid #d32f2f;
+  color: #d32f2f;
+  padding: 0.15rem 0.4rem;
+  font-family: var(--font-rough);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  transform: rotate(-15deg);
+  opacity: 0.4;
+  border-radius: 2px;
+}
+
+/* Removed todo items */
