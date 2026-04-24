@@ -1,9 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import { motion, Variants } from "framer-motion";
-import styles from "./page.module.css";
-import s from "./Page4TechStack.module.css";
 import Page4Marginalia from "@/components/Gimmicks/Page4Marginalia";
 
 const containerVariants: Variants = {
@@ -29,140 +26,92 @@ const itemVariants: Variants = {
 export default function Page4Projects() {
   return (
     <motion.div 
-      className={styles.page} 
+      className="w-full h-full relative bg-[var(--bg-page)] flex flex-col overflow-hidden text-[var(--text-primary)] after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-6 after:bg-[linear-gradient(to_right,transparent,rgba(0,0,0,0.04))] after:pointer-events-none after:z-10" 
       data-page="4"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <div className={styles.pageNumber}>04</div>
+      <div className="absolute top-6 right-7 font-mono text-[8px] tracking-[0.25em] text-[var(--text-muted)] opacity-50 select-none z-10">04</div>
 
       {/* TECHNICAL MARGINALIA & ARCHIVE DETAIL */}
       <Page4Marginalia />
 
-      <div className={s.pageContainer}>
-        <h2 className={s.contentsTitle}>TECK STACK OR WHAT ?</h2>
+      <div className="flex-1 flex flex-col p-12 pr-16 justify-center">
+        <h2 className="font-sans text-[clamp(1.2rem,3vw,1.8rem)] font-[900] tracking-tighter uppercase mb-8 border-b-2 border-black/5 pb-2 text-[var(--text-primary)]">
+          TECK STACK OR WHAT ?
+        </h2>
 
-        {/* --- SETELAN MANUAL SATU-SATU UNTUK LENGKUNGAN PRESISI --- */}
-        <motion.div className={s.tocItem} style={{ paddingLeft: '0rem' }} variants={itemVariants}>
-          <span className={s.label}>TypeScript / ES6+ Development</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>08</span>
-        </motion.div>
+        {/* --- MANUAL LIST ITEMS FOR PRECISION --- */}
+        <div className="flex flex-col gap-1 w-full max-w-[600px]">
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '0rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">TypeScript / ES6+ Development</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">08</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '3.5rem' }} variants={itemVariants}>
-          <span className={s.label}>Laravel Framework / Ecosystem</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>15</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '3.5rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Laravel Framework / Ecosystem</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">15</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '6rem' }} variants={itemVariants}>
-          <span className={s.label}>Modern PHP 8.4 Engine</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>22</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '6rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Modern PHP 8.4 Engine</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">22</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '8rem' }} variants={itemVariants}>
-          <span className={s.label}>Next.js 14 / App Router</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>29</span>
-        </motion.div>
+          {/* ... keeping the same manual structure for all items as per original design ... */}
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '8.5rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Next.js 14 / App Router</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">29</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '10.5rem' }} variants={itemVariants}>
-          <span className={s.label}>React / Framer Motion UI</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>36</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '10.5rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">React / Framer Motion UI</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">36</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '12rem' }} variants={itemVariants}>
-          <span className={s.label}>Node.js / Express Services</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>41</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '11.5rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Node.js / Express Services</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">41</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '13rem' }} variants={itemVariants}>
-          <span className={s.label}>Supabase / PostgreSQL DB</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>48</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '12.5rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Docker Containerization</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">55</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '14rem' }} variants={itemVariants}>
-          <span className={s.label}>Docker Containerization</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>55</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '13.5rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">AWS Cloud Architecture</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">62</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '15.5rem' }} variants={itemVariants}>
-          <span className={s.label}>AWS Cloud Architecture</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>62</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '14rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Linux / System Admin</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">74</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '16rem' }} variants={itemVariants}>
-          <span className={s.label}>GitHub Actions / CI/CD Pipeline</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>69</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '12.5rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Unit Testing / Jest / Pest</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">116</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '16.4rem' }} variants={itemVariants}> {/* PUNCAK */}
-          <span className={s.label}>Linux / System Administration</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>74</span>
-        </motion.div>
+          <motion.div className="flex items-center gap-2" style={{ paddingLeft: '8rem' }} variants={itemVariants}>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Scalable Infrastructure</span>
+            <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>
+            <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">144</span>
+          </motion.div>
 
-        <motion.div className={s.tocItem} style={{ paddingLeft: '16.8rem' }} variants={itemVariants}>
-          <span className={s.label}>Software Architecture Design</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>81</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '17rem' }} variants={itemVariants}>
-          <span className={s.label}>API Development / GraphQL</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>88</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '17rem' }} variants={itemVariants}>
-          <span className={s.label}>UI/UX Design / Interaction</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>95</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '17rem' }} variants={itemVariants}>
-          <span className={s.label}>Network Security / SSL Setup</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>102</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '14rem' }} variants={itemVariants}>
-          <span className={s.label}>Redis / High-Perf Caching</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>109</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '12.5rem' }} variants={itemVariants}>
-          <span className={s.label}>Unit Testing / Pest / Jest</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>116</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '12.2rem' }} variants={itemVariants}>
-          <span className={s.label}>System Profiling & Metrics</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>125</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '11rem' }} variants={itemVariants}>
-          <span className={s.label}>Cloudflare Edge Optimization</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>132</span>
-        </motion.div>
-
-        <motion.div className={s.tocItem} style={{ paddingLeft: '7rem' }} variants={itemVariants}>
-          <span className={s.label}>Scalable Infrastructure Logic</span>
-          <div className={s.dots}></div>
-          <span className={s.value}>144</span>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );

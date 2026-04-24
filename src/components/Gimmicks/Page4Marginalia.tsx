@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
-import s from "./Page4Marginalia.module.css";
 
 const fadeVariants = {
   hidden: { opacity: 0 },
@@ -15,45 +13,39 @@ const fadeVariants = {
 export default function Page4Marginalia() {
   return (
     <motion.div 
-      className={s.marginaliaLayer}
+      className="absolute inset-0 pointer-events-none z-[5] overflow-hidden font-handwrite text-[#3e2723] opacity-75"
       variants={fadeVariants}
       initial="hidden"
       animate="visible"
     >
+      {/* ── ARCHIVE STAMP (Restored Detail) ── */}
+      <div className="absolute top-10 left-8 border-[1.5px] border-[#d32f2f] text-[#d32f2f] px-2 py-0.5 font-mono text-[0.6rem] uppercase -rotate-[15deg] opacity-40 rounded-[2px] tracking-wider">
+        VERIFIED_DATA
+      </div>
 
- 
-
-      {/* ── TECHNICAL SKETCH (Hand-drawn style) ── */}
-      <div className={s.sketch}>
+      {/* ── TECHNICAL SKETCH (SVG Path Detail) ── */}
+      <div className="absolute top-[40%] left-[30px] w-[140px] h-[100px] opacity-60">
         <svg viewBox="0 0 200 120" stroke="currentColor" fill="none" strokeWidth="1.2" strokeLinecap="round">
-          {/* Box 1 (Server) */}
           <path d="M40 80 L90 80 L80 40 L30 40 Z" />
           <path d="M40 80 L40 100 L90 100 L90 80" />
-          {/* Box 2 (Database) */}
           <path d="M100 90 L150 90 L140 50 L90 50 Z" />
-          <path d="M100 90 L100 110 L150 110 L150 90" />
-          {/* Messy Connection Lines */}
           <path d="M60 40 C 60 20, 120 20, 120 50" strokeDasharray="2 2" />
-          <path d="M80 60 Q 95 35, 110 60" />
-          <path d="M50 100 Q 70 120, 110 110" />
-          {/* Random Scribble Details */}
-          <path d="M35 85 h10 M35 90 h15" />
-          <path d="M105 100 h15 M105 105 h10" />
         </svg>
       </div>
 
       {/* ── INK SPLAT ── */}
-      <div className={s.splat}>
+      <div className="absolute top-[25%] right-[5%] w-[30px] h-[30px] opacity-20">
          <svg viewBox="0 0 100 100" fill="currentColor">
             <path d="M50 30 Q 55 10, 70 30 T 90 50 T 70 70 T 50 90 T 30 70 T 10 50 T 30 30 Z" />
             <circle cx="20" cy="20" r="3" />
             <circle cx="85" cy="85" r="5" />
-            <circle cx="15" cy="80" r="4" />
          </svg>
       </div>
 
-      {/* ── DATE STAMP ── */}
-      <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', opacity: 0.3, fontFamily: 'var(--font-rough)', fontSize: '0.65rem' }}>
+      <div className="absolute top-[15%] left-[5%] text-[0.85rem] leading-[1.1] -rotate-[10deg] whitespace-nowrap">{"optimize this loop.."}</div>
+      <div className="absolute top-[48%] left-[6%] text-[1rem] leading-[1.1] -rotate-[2deg] whitespace-nowrap">{"System architecture v4.0"}</div>
+
+      <div className="absolute bottom-6 right-6 opacity-30 font-[var(--font-mono)] text-[0.65rem]">
          BATCH_RUN_ID: 110324_v2
       </div>
     </motion.div>

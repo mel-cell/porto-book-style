@@ -1,12 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@theme {
+  --font-brush: var(--font-brush);
+  --font-rough: var(--font-rough);
+  --font-scrawl: var(--font-scrawl);
+  --font-zeyada: var(--font-zeyada);
+  --font-handwrite: var(--font-handwrite);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+  --font-sans: var(--font-inter);
 }
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 
 :root {
   /* ── Monochrome Palette ── */

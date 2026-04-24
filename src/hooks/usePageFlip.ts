@@ -104,7 +104,7 @@ export function usePageFlip(totalPages: number): UsePageFlipReturn {
   // ─── Commit a completed flip ──────────────────────────────────────────────
   const commitFlip = useCallback((dir: FlipDirection) => {
     if (dir === "forward") {
-      setCurrentPage(p => Math.min(p + 2, totalPages - 1));
+      setCurrentPage(p => p + 2);
     } else {
       setCurrentPage(p => Math.max(p - 2, 1));
     }
@@ -116,7 +116,7 @@ export function usePageFlip(totalPages: number): UsePageFlipReturn {
     dragRef.current.direction = null;
     setIsFlipping(false);
     setFlipState(null);
-  }, [totalPages]);
+  }, []);
 
   // ─── Trigger a programmatic flip ─────────────────────────────────────────
   const triggerFlip = useCallback((dir: FlipDirection, originY = 0.8) => {
@@ -191,7 +191,7 @@ export function usePageFlip(totalPages: number): UsePageFlipReturn {
   }, [canGoNext, canGoPrev, applyFlipTransform]);
 
   // ─── Pointer up — snap complete or snap back ──────────────────────────────
-  const onPointerUp = useCallback((e: React.PointerEvent) => {
+  const onPointerUp = useCallback(() => {
     if (!dragRef.current.active) return;
     dragRef.current.active = false;
 
@@ -251,7 +251,7 @@ export function usePageFlip(totalPages: number): UsePageFlipReturn {
       requestAnimationFrame(() => {
         animate(0, 1, dir, originY, () => {
           if (dir === "forward") {
-            setCurrentPage(p => Math.min(p + 2, totalPages - 1));
+            setCurrentPage(p => p + 2);
           } else {
             setCurrentPage(p => Math.max(p - 2, 1));
           }

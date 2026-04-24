@@ -6,10 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import BookCover from "./BookCover";
 import BookSpread from "./BookSpread";
 import PenIllustration from "./PenIllustration";
-import styles from "./BookScene.module.css";
 
 type AppState = "cover" | "opening" | "open" | "closing";
-
 
 export default function BookScene() {
   const [appState, setAppState] = useState<AppState>("cover");
@@ -25,13 +23,13 @@ export default function BookScene() {
   };
 
   return (
-    <div className={styles.scene}>
+    <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
       {/* Background remains sharp at all times */}
-      <div className={styles.bg} />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_70%_at_50%_40%,#f8f6f2_0%,#ece9e2_100%)]" />
 
       {/* Floating Pen Illustration on the left (Hides on Mobile via CSS) */}
       <motion.div
-        className={styles.pen}
+        className="absolute top-1/2 left-1/2 h-[clamp(380px,45vh,600px)] w-auto pointer-events-none z-[5] hidden lg:block"
         initial={{ opacity: 0, x: "calc(var(--book-width) * -0.5 - 15vw)", y: "-50%", rotate: -60 }}
         animate={{ 
           opacity: 1, 

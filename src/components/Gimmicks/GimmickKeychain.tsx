@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import s from "./GimmickKeychain.module.css";
 
 interface Props {
   className?: string;
@@ -11,7 +10,7 @@ interface Props {
 export default function GimmickKeychain({ className }: Props) {
   return (
     <motion.div 
-      className={`${s.container} ${className}`}
+      className={`absolute top-[60vh] -left-[160px] w-24 h-auto z-[100] cursor-grab active:cursor-grabbing ${className}`}
       drag
       dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
       whileHover={{ scale: 1.05 }}
@@ -19,25 +18,26 @@ export default function GimmickKeychain({ className }: Props) {
     >
       {/* THE KEY (Underneath) */}
       <motion.div 
-        className={s.key}
+        className="absolute w-20 h-auto top-0 left-0 drop-shadow-[5px_8px_12px_rgba(0,0,0,0.35)]"
         animate={{ rotate: [-2, 2, -2] }}
         transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
       >
-        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <div className="relative w-full aspect-[2/5]">
           <Image 
             src="/img/thekey.png" 
             alt="Heart Key" 
             fill 
             sizes="80px"
-            style={{ objectFit: 'contain' }}
+            className="object-contain"
             priority
+            quality={90}
           />
         </div>
       </motion.div>
 
       {/* THE CAT (Overlapping) */}
       <motion.div 
-        className={s.cat}
+        className="absolute w-[6.8rem] h-auto top-[0.6rem] left-[-2.2rem] drop-shadow-[15px_15px_15px_rgba(0,0,0,0.25)]"
         animate={{ 
           rotate: [0, -3, 0, 3, 0],
           y: [0, 2, 0] 
@@ -49,14 +49,15 @@ export default function GimmickKeychain({ className }: Props) {
           delay: 0.5 
         }}
       >
-        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <div className="relative w-full aspect-square">
           <Image 
             src="/img/rin-catkey.png" 
             alt="Clinging Cat" 
             fill 
             sizes="110px"
-            style={{ objectFit: 'contain' }}
+            className="object-contain"
             priority
+            quality={90}
           />
         </div>
       </motion.div>
