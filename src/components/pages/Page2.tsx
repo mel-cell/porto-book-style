@@ -23,7 +23,7 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Page2Intro() {
+export default function Page2() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isCardOut, setIsCardOut] = useState(false);
 

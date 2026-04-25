@@ -23,7 +23,7 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Page4Projects() {
+export default function Page4() {
   return (
     <motion.div 
       className="w-full h-full relative bg-[var(--bg-page)] flex flex-col overflow-hidden text-[var(--text-primary)] after:content-[''] after:absolute after:inset-y-0 after:right-0 after:w-6 after:bg-[linear-gradient(to_right,transparent,rgba(0,0,0,0.04))] after:pointer-events-none after:z-10" 
@@ -62,7 +62,6 @@ export default function Page4Projects() {
             <span className="font-mono text-[clamp(9px,2vw,12px)] text-[var(--text-muted)]">22</span>
           </motion.div>
 
-          {/* ... keeping the same manual structure for all items as per original design ... */}
           <motion.div className="flex items-center gap-2" style={{ paddingLeft: '8.5rem' }} variants={itemVariants}>
             <span className="font-mono text-[clamp(9px,2vw,12px)] tracking-[0.1em] text-[var(--text-secondary)] whitespace-nowrap uppercase">Next.js 14 / App Router</span>
             <div className="flex-1 border-b border-dotted border-black/10 mt-1"></div>

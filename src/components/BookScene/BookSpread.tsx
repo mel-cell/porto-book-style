@@ -11,12 +11,12 @@ import { usePageFlip } from "@/hooks/usePageFlip";
 // Index 3  → Second right page
 // ... and so on. Always pairs.
 import Page1InsideCover from "@/components/pages/Page1InsideCover";
-import Page2Intro       from "@/components/pages/Page2Intro";
-import Page3Skills      from "@/components/pages/Page3Skills";
-import Page4Projects    from "@/components/pages/Page4Projects";
-import Page5Contact     from "@/components/pages/Page5Contact";
-import Page6Archive     from "@/components/pages/Page6Archive";
-import Page7Connect     from "@/components/pages/Page7Connect";
+import Page2Intro       from "@/components/pages/Page2";
+import Page3Skills      from "@/components/pages/Page3";
+import Page4Projects    from "@/components/pages/Page4";
+import Page5Contact     from "@/components/pages/Page5";
+import Page6Archive     from "@/components/pages/Page6";
+import Page7Connect     from "@/components/pages/Page7";
 import Page8BackCover   from "@/components/pages/Page8BackCover";
 
 const PAGES = [

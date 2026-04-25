@@ -22,7 +22,7 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Page3Skills() {
+export default function Page3() {
   return (
     <motion.div
       className="w-full h-full relative bg-[var(--bg-page-alt)] flex flex-col overflow-hidden text-[var(--text-primary)] after:content-[''] after:absolute after:inset-y-0 after:left-0 after:w-6 after:bg-[linear-gradient(to_left,transparent,rgba(0,0,0,0.04))] after:pointer-events-none after:z-10"
@@ -44,7 +44,7 @@ export default function Page3Skills() {
 
           {/* LEFT – formal typed prose */}
           <motion.div className="flex flex-col pt-4" variants={itemVariants}>
-            <div className="font-serif text-[clamp(9px,1.1vw,11.5px)] leading-[1.85] text-[var(--text-secondary)] text-justify pr-6">
+            <div className="font-serif text-[clamp(9px,1.1vw,11.5px)] leading-[1.85] text-[var(--text-secondary)] text-justify pr-2">
               <p className="mb-5">
                 My name is Melvin — a software engineer and DevOps enthusiast
                 based in Malang, Indonesia. I build systems that breathe: from

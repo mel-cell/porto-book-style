@@ -19,7 +19,7 @@ const linkVariants: Variants = {
   }
 };
 
-export default function Page7Connect() {
+export default function Page7() {
   return (
     <motion.div 
       className="w-full h-full relative bg-[var(--bg-page)] flex flex-col overflow-hidden text-[var(--text-primary)]"
