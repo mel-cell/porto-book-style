@@ -9,17 +9,19 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0.15, // Let's keep a small stagger for page 2 as requested before
+      delayChildren: 0.3,
+      staggerChildren: 0.12,
     },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
   visible: { 
     opacity: 1, 
-    transition: { duration: 0.6, ease: "linear" } 
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } 
   },
 };
 

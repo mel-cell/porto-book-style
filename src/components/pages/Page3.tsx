@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 
@@ -8,21 +9,45 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0, 
+      delayChildren: 0.3,
+      staggerChildren: 0.1, 
     },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: 14, filter: "blur(4px)" },
   visible: { 
     opacity: 1, 
-    transition: { duration: 0.6, ease: "linear" } 
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } 
   },
 };
 
+// Skeleton Helper for Page 3
+const SkeletonPage3 = () => (
+  <div className="flex flex-col gap-4 opacity-[0.15] animate-pulse py-4">
+    <div className="space-y-3">
+      <div className="h-2 w-full bg-black rounded-sm" />
+      <div className="h-2 w-full bg-black rounded-sm" />
+      <div className="h-2 w-5/6 bg-black rounded-sm" />
+    </div>
+    <div className="space-y-3 mt-10">
+      <div className="h-2 w-full bg-black rounded-sm" />
+      <div className="h-2 w-3/4 bg-black rounded-sm" />
+    </div>
+  </div>
+);
+
 export default function Page3() {
+  const [initLoading, setInitLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setInitLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <motion.div
       className="w-full h-full relative bg-[var(--bg-page-alt)] flex flex-col overflow-hidden text-[var(--text-primary)] after:content-[''] after:absolute after:inset-y-0 after:left-0 after:w-6 after:bg-[linear-gradient(to_left,transparent,rgba(0,0,0,0.04))] after:pointer-events-none after:z-10"
@@ -33,52 +58,63 @@ export default function Page3() {
     >
       <motion.div className="absolute top-6 left-7 font-mono text-[8px] tracking-[0.25em] text-[var(--text-muted)] opacity-50 select-none" variants={itemVariants}>03</motion.div>
 
-      <div className="flex-1 flex flex-col p-12 relative h-full">
+      <div className="flex-1 flex flex-col p-12 pr-6 relative h-full">
         {/* ── TOP META ── */}
-        <motion.div className="flex justify-between items-center" variants={itemVariants}>
-          <span className="font-mono text-[9px] tracking-[0.35em] text-[var(--text-muted)] uppercase font-medium">INTRODUCTION</span>
+        <motion.div className="flex justify-between items-center mb-7 pb-4 border-b border-black/5" variants={itemVariants}>
+          <span className="font-mono text-[9px] tracking-[0.35em] text-[var(--text-muted)] uppercase font-medium">SUMMARY</span>
         </motion.div>
 
-        {/* ── MAIN GRID ── (Right side is now wider) */}
-        <div className="grid grid-cols-[1.2fr_1.4fr] gap-2 h-full items-start">
+        {/* ── MAIN GRID ── */}
+        <div className="grid grid-cols-[1.2fr_1.2fr] gap-4 h-full items-start">
 
-          {/* LEFT – formal typed prose */}
-          <motion.div className="flex flex-col pt-4" variants={itemVariants}>
-            <div className="font-serif text-[clamp(9px,1.1vw,11.5px)] leading-[1.85] text-[var(--text-secondary)] text-justify pr-2">
-              <p className="mb-5">
-                My name is Melvin — a software engineer and DevOps enthusiast
-                based in Malang, Indonesia. I build systems that breathe: from
-                expressive user interfaces to the pipelines that keep them alive.
-              </p>
-              <p className="mb-5">
-                The digital world is built on layers of abstraction hidden
-                behind polished surfaces. Underneath there lies raw, complex
-                machinery. This is where I find my purpose.
-              </p>
-              <p className="mb-5">
-                Whether crafting a micro-interaction or architecting a
-                deployment strategy, I approach every problem with the
-                same question — not just <em className="italic opacity-80">how</em> it works,
-                but <em className="italic opacity-80">why</em> it matters.
-              </p>
-              <div className="mt-10 font-mono text-[9px] tracking-[0.15em] uppercase leading-relaxed">
-                Status: <strong className="font-bold text-[var(--text-primary)]">online</strong> <br/>
-                access: <span className="opacity-60">encrypted</span> <br/>
-                node: <span className="opacity-60">malang_id</span>
-              </div>
-            </div>
-          </motion.div>
+          {/* LEFT – slimmed down content */}
+          <div className="flex flex-col pt-0 max-w-[260px]">
+            {initLoading ? (
+              <SkeletonPage3 />
+            ) : (
+              <motion.div className="font-serif text-[clamp(9.5px,1.15vw,11.5px)] leading-[1.8] text-[var(--text-primary)] opacity-80 text-justify pr-4" variants={itemVariants}>
+                
+                {/* Section 1: Who Am I */}
+                <div className="mb-4">
+                  <p>
+                    Saya Melvin, seorang Software Engineer yang fokus pada pengembangan solusi digital efisien dan performan. Berbasis di Malang, saya mengintegrasikan keahlian teknis untuk membangun sistem yang tangguh dari skala kecil hingga menengah.
+                  </p>
+                </div>
 
-          {/* RIGHT – larger abstract scrawl image */}
-          <motion.div className="relative mt-[-20%] w-full h-[110%] -mt-[5%] opacity-80 mix-blend-multiply flex items-center justify-center pointer-events-none" variants={itemVariants}>
-            <Image
-              src="/img/abstractext.png"
-              alt="abstract handwriting"
-              fill
-              className="object-contain grayscale contrast-[1.3]"
-              sizes="50vw"
-              priority
-            />
+                {/* Section 2: How I Work */}
+                <div className="mb-4">
+                  <p>
+                    Saya bekerja dengan pendekatan sistematis; mengutamakan stabilitas sistem yang bersih, automasi tugas berulang melalui DevOps, dan memastikan skalabilitas infrastruktur tetap terjaga di setiap tahapan pengembangan.
+                  </p>
+                </div>
+
+                {/* Section 3: Tech Stack */}
+                <div className="mb-4">
+                  <p>
+                    Keahlian utama saya mencakup ekosistem TypeScript (React, Next.js, Node.js) untuk pengembangan aplikasi, serta penggunaan Docker, CI/CD, dan Cloud Services untuk manajemen infrastruktur dan deployment.
+                  </p>
+                </div>
+
+                <div className="mt-4 font-mono text-[8px] tracking-[0.1em] uppercase opacity-40">
+                  Registry: mel-cell (Melvin) <br/>
+                  Location: MALANG, ID // 112.6326° E
+                </div>
+              </motion.div>
+            )}
+          </div>
+
+          {/* RIGHT – Image Scrawl */}
+          <motion.div className="relative -mt-20 -ml-2 w-[110%] h-[120%] opacity-60 mix-blend-multiply flex items-center justify-center pointer-events-none" variants={itemVariants}>
+            {!initLoading && (
+              <Image
+                src="/img/abstractext.png"
+                alt="abstract handwriting"
+                fill
+                className="object-contain grayscale contrast-[1.2]"
+                sizes="40vw"
+                priority
+              />
+            )}
           </motion.div>
 
         </div>
