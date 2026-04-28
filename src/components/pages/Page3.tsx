@@ -112,7 +112,6 @@ export default function Page3() {
                 fill
                 className="object-contain grayscale contrast-[1.2]"
                 sizes="40vw"
-                priority
               />
             )}
           </motion.div>
