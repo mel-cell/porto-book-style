@@ -45,3 +45,6 @@ Dockerfile
 docker-compose.yml
 .dockerignore
 Caddyfile
+
+# classified data
+/public/pdf/*
