@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface CVViewerProps {
@@ -10,9 +10,8 @@ interface CVViewerProps {
 
 export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
   const cvPath = "/pdf/RESUME MAULIDANI BRIAN MELVINO.pdf";
-
-  // Generate a stable stable random ID to prevent hydration/render issues
-  const randomId = useMemo(() => Math.random().toString(16).slice(2, 8).toUpperCase(), []);
+  const id = useId();
+  const docId = id.replace(/:/g, "").toUpperCase();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,6 +32,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/[0.04] pointer-events-auto"
             onClick={onClose}
           />
 
@@ -43,6 +43,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
               y: 0, 
               x: 350, 
               opacity: 1, 
+              rotateY: 15,
               scale: 1 
             }}
             exit={{ y: "100%", x: 450, opacity: 0, scale: 0.8 }}
@@ -65,7 +66,6 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
             {/* Float Navigation (Circular Buttons) */}
             <div className="absolute -top-14 right-2 flex items-center gap-4 z-[120]">
-                {/* Download */}
                 <motion.a
                   href={cvPath}
                   download
@@ -80,7 +80,6 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
                   </svg>
                 </motion.a>
 
-                {/* Close */}
                 <motion.button
                   onClick={onClose}
                   className="w-10 h-10 rounded-full border border-black/20 bg-white/90 backdrop-blur-md text-black flex items-center justify-center transition-all hover:bg-red-500 hover:text-white hover:border-red-500 shadow-lg active:scale-95 text-[14px]"
@@ -93,7 +92,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
             {/* Corner ID Tag */}
             <div className="absolute bottom-6 left-6 font-mono text-[8px] opacity-25 uppercase tracking-[0.4em] pointer-events-none">
-                VERIFIED // {randomId}
+                VERIFIED // {docId || "INITIALIZING..."}
             </div>
           </motion.div>
         </div>
